@@ -3,6 +3,7 @@ package pers.nefedov.demoshop.controllers;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pers.nefedov.demoshop.dto.DesktopDto;
 import pers.nefedov.demoshop.services.DesktopService;
@@ -10,32 +11,39 @@ import pers.nefedov.demoshop.services.DesktopService;
 import java.util.List;
 
 @RestController
+@RequestMapping("desktops")
 public class DesktopController {
     @Autowired
-    //DesktopRepository desktopRepository;
     DesktopService desktopService;
 
-    @GetMapping(value = "desktops/all")
+    @GetMapping(value = "/all")
     @ResponseStatus(HttpStatus.OK)
-    List<DesktopDto> getAll() {
-        return desktopService.findAll();
+    public ResponseEntity<List<DesktopDto>> getAll() {
+        final List<DesktopDto> allDesktops = desktopService.findAll();
+        return allDesktops != null && !allDesktops.isEmpty() ?
+                new ResponseEntity<>(allDesktops, HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("desktops/{id}")
-    DesktopDto getById(@PathVariable long id) {
-        return desktopService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<DesktopDto> getById(@PathVariable long id) {
+        final  DesktopDto desktopDto = desktopService.findById(id);
+        return desktopDto != null ?
+                new ResponseEntity<>(desktopDto, HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(value = "desktops/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    void addItem(@Valid @RequestBody DesktopDto desktopDto) {
+    @PostMapping(value = "/add")
+    public ResponseEntity<?> addItem(@Valid @RequestBody DesktopDto desktopDto) {
         desktopService.save(desktopDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "desktops/update")
+    @PostMapping(value = "/update")
     @ResponseStatus(HttpStatus.OK)
-    void update(@Valid @RequestBody DesktopDto desktopDto) {
-        desktopService.update(desktopDto);
+    public ResponseEntity<?> update(@Valid @RequestBody DesktopDto desktopDto) {
+        final int updated = desktopService.update(desktopDto);
+        return updated == 1 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
