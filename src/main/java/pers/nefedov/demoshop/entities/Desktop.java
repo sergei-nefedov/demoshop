@@ -8,7 +8,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-public class Desktop extends Device {
+public class Desktop {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -21,15 +21,6 @@ public class Desktop extends Device {
     private int quantity;
 
     public Desktop() {
-    }
-
-    public Desktop(Long id, FormFactor formFactor, long serialNumber, String manufacturer, double price, int quantity) {
-        this.id = id;
-        this.formFactor = formFactor;
-        this.serialNumber = serialNumber;
-        this.manufacturer = manufacturer;
-        this.price = price;
-        this.quantity = quantity;
     }
 
     public Long getId() {
