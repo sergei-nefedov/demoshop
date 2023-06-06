@@ -1,5 +1,5 @@
 # demoshop
-Demo application (RESTful shop service)
+Demo application (RESTful shop service)<br>
 Демонстрационное приложение на базе Spring Boot, выполненное в соответствии с заданием (см. внизу страницы), реализующее функционал магазина.
 
 Инструкция по запуску и примеры запросов:
