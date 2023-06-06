@@ -6,88 +6,88 @@ Demo application (RESTful shop service)<br>
 
 Запуск производится через метод main класса DemoshopApplication, находящегося в пакете pers/nefedov/demoshop (путь от корневого каталога - src/main/java/pers/nefedov/demoshop).
 
-Примеры GET-запросов для получения информации о всех товаров в категории:
-http://localhost:8080/desktops/all      - для настольных компьютеров;
-http://localhost:8080/monitors/all      - для мониторов;
-http://localhost:8080/notebooks/all     - для ноутбуков;
-http://localhost:8080/harddrives/all    - для жестких дисков.
+Примеры GET-запросов для получения информации о всех товаров в категории:<br>
+http://localhost:8080/desktops/all      - для настольных компьютеров;<br>
+http://localhost:8080/monitors/all      - для мониторов;<br>
+http://localhost:8080/notebooks/all     - для ноутбуков;<br>
+http://localhost:8080/harddrives/all    - для жестких дисков.<br>
 
-Примеры GET-запросов для получения информации о товаре определенной категории по его идентификационному номеру (в примерах id = 1):
-http://localhost:8080/desktops/1        - для настольных компьютеров;
-http://localhost:8080/monitors/1        - для мониторов;
-http://localhost:8080/notebooks/1       - для ноутбуков;
-http://localhost:8080/harddrives/1      - для жестких дисков.
+Примеры GET-запросов для получения информации о товаре определенной категории по его идентификационному номеру (в примерах id = 1):<br>
+http://localhost:8080/desktops/1        - для настольных компьютеров;<br>
+http://localhost:8080/monitors/1        - для мониторов;<br>
+http://localhost:8080/notebooks/1       - для ноутбуков;<br>
+http://localhost:8080/harddrives/1      - для жестких дисков.<br>
 
-Примеры POST-запросов для добавления товара определенной категории:
-http://localhost:8080/desktops/add      - для настольных компьютеров;
-{
-    "formFactor": "DESKTOP",            
-    "serialNumber": 91,                 
-    "manufacturer": "No name",          
-    "price": 11000,
-    "quantity": 3
-}
-http://localhost:8080/notebooks/add     - для ноутбуков;
-{
-    "size": 15,
-    "serialNumber": 22222222,
-    "manufacturer": "Dell",
-    "price": 10000,
-    "quantity": 1
-}
-http://localhost:8080/harddrives/add    - для жестких дисков;
-{
-    "capacity": 4000,
-    "serialNumber": 8989,
-    "manufacturer": "Toshiba",
-    "price": 7500,
-    "quantity": 20
-}
-http://localhost:8080/monitors/add      - для мониторов.
-{
-    "diagonalSize": 19,
-    "serialNumber": 1000,
-    "manufacturer": "Dell",
-    "price": 9000,
-    "quantity": 10
-}
+Примеры POST-запросов для добавления товара определенной категории:<br>
+http://localhost:8080/desktops/add      - для настольных компьютеров;<br>
+{<br>
+    "formFactor": "DESKTOP",<br>            
+    "serialNumber": 91,<br>                 
+    "manufacturer": "No name",<br>          
+    "price": 11000,<br>
+    "quantity": 3<br>
+}<br>
+http://localhost:8080/notebooks/add     - для ноутбуков;<br>
+{<br>
+    "size": 15,<br>
+    "serialNumber": 22222222,<br>
+    "manufacturer": "Dell",<br>
+    "price": 10000,<br>
+    "quantity": 1<br>
+}<br>
+http://localhost:8080/harddrives/add    - для жестких дисков;<br>
+{<br>
+    "capacity": 4000,<br>
+    "serialNumber": 8989,<br>
+    "manufacturer": "Toshiba",<br>
+    "price": 7500,<br>
+    "quantity": 20<br>
+}<br>
+http://localhost:8080/monitors/add      - для мониторов.<br>
+{<br>
+    "diagonalSize": 19,<br>
+    "serialNumber": 1000,<br>
+    "manufacturer": "Dell",<br>
+    "price": 9000,<br>
+    "quantity": 10<br>
+}<br>
 
-Примеры POST-запросов для редактирования товара определенной категории по его идентификационному номеру (в примерах id = 1)::
-http://localhost:8080/desktops/update     - для настольных компьютеров;
-{
-    "formFactor": "DESKTOP",
-    "serialNumber": 20002,
-    "manufacturer": "Apple",
-    "price": 182000,
-    "quantity": 9,
-    "id": 1
-}
-http://localhost:8080/notebooks/update    - для ноутбуков;
-{
-    "size": "17",
-    "serialNumber": 22222222,
-    "manufacturer": "Dell",
-    "price": 10000,
-    "quantity": 1,
-    "id": 1
-}
-http://localhost:8080/harddrives/update   - для жестких дисков;
-{
-    "capacity": "1000",
-    "serialNumber": 101010,
-    "manufacturer": "Western Union",
-    "price": 3500,
-    "quantity": 2,
-    "id": 1
-}
-http://localhost:8080/monitors/update     - для мониторов.
-{
-    "diagonalSize": "24",
-    "serialNumber": 55555,
-    "manufacturer": "Dell",
-    "price": 10000,
-    "quantity": 3,
-    "id": 1
+Примеры POST-запросов для редактирования товара определенной категории по его идентификационному номеру (в примерах id = 1):<br>
+http://localhost:8080/desktops/update     - для настольных компьютеров;<br>
+{<br>
+    "formFactor": "DESKTOP",<br>
+    "serialNumber": 20002,<br>
+    "manufacturer": "Apple",<br>
+    "price": 182000,<br>
+    "quantity": 9,<br>
+    "id": 1<br>
+}<br>
+http://localhost:8080/notebooks/update    - для ноутбуков;<br>
+{<br>
+    "size": "17",<br>
+    "serialNumber": 22222222,<br>
+    "manufacturer": "Dell",<br>
+    "price": 10000,<br>
+    "quantity": 1,<br>
+    "id": 1<br>
+}<br>
+http://localhost:8080/harddrives/update   - для жестких дисков;<br>
+{<br>
+    "capacity": "1000",<br>
+    "serialNumber": 101010,<br>
+    "manufacturer": "Western Union",<br>
+    "price": 3500,<br>
+    "quantity": 2,<br>
+    "id": 1<br>
+}<br>
+http://localhost:8080/monitors/update     - для мониторов.<br>
+{<br>
+    "diagonalSize": "24",<br>
+    "serialNumber": 55555,<br>
+    "manufacturer": "Dell",<br>
+    "price": 10000,<br>
+    "quantity": 3,<br>
+    "id": 1<br>
 }
 
 ___________________________________________________________________________________________________________________________________________________________________________
