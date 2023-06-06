@@ -6,7 +6,7 @@ import pers.nefedov.demoshop.entities.Monitor;
 
 @Service
 public class MonitorMappingUtils {
-    public MonitorDto mapToNotebookDto(Monitor entity) {
+    public MonitorDto mapToMonitorDto(Monitor entity) {
         MonitorDto dto = new MonitorDto();
         dto.setDiagonalSize(entity.getDiagonalSize());
         dto.setManufacturer(entity.getManufacturer());
@@ -16,7 +16,7 @@ public class MonitorMappingUtils {
         dto.setId(entity.getId());
         return dto;
     }
-    public Monitor mapToNotebookEntity(MonitorDto dto) {
+    public Monitor mapToMonitorEntity(MonitorDto dto) {
         Monitor entity = new Monitor();
         entity.setQuantity(dto.getQuantity());
         entity.setSerialNumber(dto.getSerialNumber());

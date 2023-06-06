@@ -10,5 +10,5 @@ public interface NotebookService {
     public void save(NotebookDto notebookDto);
     public List<NotebookDto> findAll();
     public NotebookDto findById(long id);
-    public int update(NotebookDto desktopDto);
+    public int update(NotebookDto notebookDto);
 }

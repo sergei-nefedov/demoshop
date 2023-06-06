@@ -2,7 +2,6 @@ package pers.nefedov.demoshop.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import pers.nefedov.demoshop.validators.NotebookSize;
 
 @Data
 public class MonitorDto {
