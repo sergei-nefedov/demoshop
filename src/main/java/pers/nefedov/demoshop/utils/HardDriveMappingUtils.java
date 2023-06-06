@@ -6,7 +6,7 @@ import pers.nefedov.demoshop.entities.HardDrive;
 
 @Service
 public class HardDriveMappingUtils {
-    public HardDriveDto mapToNotebookDto(HardDrive entity) {
+    public HardDriveDto mapToHardDriveDto(HardDrive entity) {
         HardDriveDto dto = new HardDriveDto();
         dto.setCapacity(entity.getCapacity());
         dto.setManufacturer(entity.getManufacturer());
@@ -16,7 +16,7 @@ public class HardDriveMappingUtils {
         dto.setId(entity.getId());
         return dto;
     }
-    public HardDrive mapToNotebookEntity(HardDriveDto dto) {
+    public HardDrive mapToHardDriveEntity(HardDriveDto dto) {
         HardDrive entity = new HardDrive();
         entity.setQuantity(dto.getQuantity());
         entity.setSerialNumber(dto.getSerialNumber());
