@@ -38,9 +38,6 @@ class DemoshopApplicationTests {
     }
 
     @Test
-    void contextLoads() {
-    }
-    @Test
     public void whenCreateDesktop_thenStatus201() {
         Desktop newDesktop = new Desktop();
         newDesktop.setFormFactor(FormFactor.DESKTOP);
@@ -69,7 +66,7 @@ class DemoshopApplicationTests {
 
     @Test
     public void givenDesktop_whenGetDesktop_thenStatus200() {
-        long id = createTestDesktop();
+        long id = createTestDesktop(FormFactor.DESKTOP, "Manufactura", 20000, 10, 9999);
         given().pathParam("id", id)
 
                 .when().get("/desktops/{id}")
@@ -83,13 +80,62 @@ class DemoshopApplicationTests {
         ;
     }
 
-    public int createTestDesktop() {
+    @Test
+    public void whenUpdateDesktop_thenStatus200() {
+        long id = createTestDesktop(FormFactor.DESKTOP, "Manufactura", 20000, 10, 9999);
         Desktop newDesktop = new Desktop();
-        newDesktop.setFormFactor(FormFactor.DESKTOP);
-        newDesktop.setManufacturer("Manufactura");
-        newDesktop.setPrice(20000);
-        newDesktop.setQuantity(10);
-        newDesktop.setSerialNumber(9999);
+        newDesktop.setFormFactor(FormFactor.NETTOP);
+        newDesktop.setManufacturer("Other");
+        newDesktop.setPrice(99999);
+        newDesktop.setQuantity(11);
+        newDesktop.setSerialNumber(1111);
+        newDesktop.setId(id);
+        given().log()
+                .body().contentType("application/json").body(newDesktop)
+
+                .when().post("desktops/update")
+
+                .then().log().body().statusCode(HttpStatus.OK.value());
+
+        given().pathParam("id", id)
+
+                .when().get("/desktops/{id}")
+
+                .then().log().body().statusCode(HttpStatus.OK.value())
+                .and().body("manufacturer", equalTo("Other"))
+                .and().body("formFactor", equalTo("NETTOP"))
+                .and().body("price", equalTo(99999.0F))
+                .and().body("quantity", equalTo(11))
+                .and().body("serialNumber", equalTo(1111))
+        ;
+    }
+
+    @Test
+    public void whenDeleteAllDesktops_thenStatus200() {
+
+        given().log().body().contentType("application/json")
+
+                .when().delete("/desktops/delete/all")
+
+                .then().log().body()
+                .statusCode(HttpStatus.OK.value());
+
+        when().get("/desktops/all")
+                .then().log().body()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+
+                ;
+    }
+
+
+    public int createTestDesktop(FormFactor formFactor, String manufacturer, double price, int quantity,
+                                 long serialNumber) {
+        Desktop newDesktop = new Desktop();
+        newDesktop.setFormFactor(formFactor);
+        newDesktop.setManufacturer(manufacturer);
+        newDesktop.setPrice(price);
+        newDesktop.setQuantity(quantity);
+        newDesktop.setSerialNumber(serialNumber);
 
         int id =
         given().log().body()
