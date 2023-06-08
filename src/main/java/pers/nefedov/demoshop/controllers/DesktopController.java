@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pers.nefedov.demoshop.dto.DesktopDto;
-import pers.nefedov.demoshop.services.DesktopService;
+import pers.nefedov.demoshop.facades.DesktopFacade;
 
 import java.util.List;
 
@@ -14,12 +14,12 @@ import java.util.List;
 @RequestMapping("desktops")
 public class DesktopController {
     @Autowired
-    DesktopService desktopService;
+    DesktopFacade desktopFacade;
 
     @GetMapping(value = "/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<DesktopDto>> getAll() {
-        final List<DesktopDto> allDesktops = desktopService.findAll();
+        final List<DesktopDto> allDesktops = desktopFacade.findAll();
         return allDesktops != null && !allDesktops.isEmpty() ?
                 new ResponseEntity<>(allDesktops, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -27,7 +27,7 @@ public class DesktopController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DesktopDto> getById(@PathVariable long id) {
-        final  DesktopDto desktopDto = desktopService.findById(id);
+        final  DesktopDto desktopDto = desktopFacade.findById(id);
         return desktopDto != null ?
                 new ResponseEntity<>(desktopDto, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -35,14 +35,14 @@ public class DesktopController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<?> addItem(@Valid @RequestBody DesktopDto desktopDto) {
-        desktopService.save(desktopDto);
+        desktopFacade.save(desktopDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/update")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@Valid @RequestBody DesktopDto desktopDto) {
-        final int updated = desktopService.update(desktopDto);
+        final int updated = desktopFacade.update(desktopDto);
         return updated == 1 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
