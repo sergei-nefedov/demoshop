@@ -23,8 +23,6 @@ public class DesktopServiceImpl implements DesktopService {
     }
 
     public List<DesktopMapper> findAll() {
-//        return desktopRepository.findAll().stream().
-//                map(desktopMappingUtils::mapToDesktopDto).collect(Collectors.toList());
         return desktopRepository.findAll().stream().
                 map(DesktopMapper::new).collect(Collectors.toList());
     }
