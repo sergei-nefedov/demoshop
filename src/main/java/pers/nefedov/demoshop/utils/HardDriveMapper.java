@@ -1,12 +1,31 @@
 package pers.nefedov.demoshop.utils;
 
-import org.springframework.stereotype.Service;
 import pers.nefedov.demoshop.dto.HardDriveDto;
 import pers.nefedov.demoshop.entities.HardDrive;
 
-@Service
-public class HardDriveMappingUtils {
-    public HardDriveDto mapToHardDriveDto(HardDrive entity) {
+public class HardDriveMapper {
+    private final HardDriveDto dto;
+    private final HardDrive entity;
+
+    public HardDriveMapper(HardDriveDto dto) {
+        this.dto = dto;
+        this.entity = mapToHardDriveEntity(dto);
+    }
+
+    public HardDriveMapper(HardDrive entity) {
+        this.entity = entity;
+        this.dto = mapToHardDriveDto(entity);
+    }
+
+    public HardDriveDto getDto() {
+        return dto;
+    }
+
+    public HardDrive getEntity() {
+        return entity;
+    }
+
+    private HardDriveDto mapToHardDriveDto(HardDrive entity) {
         HardDriveDto dto = new HardDriveDto();
         dto.setCapacity(entity.getCapacity());
         dto.setManufacturer(entity.getManufacturer());
@@ -16,7 +35,7 @@ public class HardDriveMappingUtils {
         dto.setId(entity.getId());
         return dto;
     }
-    public HardDrive mapToHardDriveEntity(HardDriveDto dto) {
+    private HardDrive mapToHardDriveEntity(HardDriveDto dto) {
         HardDrive entity = new HardDrive();
         entity.setQuantity(dto.getQuantity());
         entity.setSerialNumber(dto.getSerialNumber());

@@ -3,16 +3,16 @@ package pers.nefedov.demoshop.facades;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.nefedov.demoshop.dto.DesktopDto;
-import pers.nefedov.demoshop.services.DesktopService1;
+import pers.nefedov.demoshop.services.DesktopService;
 import pers.nefedov.demoshop.utils.DesktopMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class DesktopFacadeImpl1 implements DesktopFacade {
+public class DesktopFacadeImpl implements DesktopFacade {
 @Autowired
-DesktopService1 desktopService;
+DesktopService desktopService;
     @Override
     public void save(DesktopDto desktopDto) {
         desktopService.save(new DesktopMapper(desktopDto));
