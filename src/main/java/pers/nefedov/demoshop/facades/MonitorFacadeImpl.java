@@ -14,8 +14,8 @@ public class MonitorFacadeImpl implements MonitorFacade {
     @Autowired
     MonitorService monitorService;
     @Override
-    public void save(MonitorDto monitorDto) {
-        monitorService.save(new MonitorMapper(monitorDto));
+    public MonitorDto save(MonitorDto monitorDto) {
+        return monitorService.save(new MonitorMapper(monitorDto)).getDto();
     }
 
     @Override
@@ -31,5 +31,10 @@ public class MonitorFacadeImpl implements MonitorFacade {
     @Override
     public int update(MonitorDto monitorDto) {
         return monitorService.update(new MonitorMapper(monitorDto));
+    }
+
+    @Override
+    public void deleteAll() {
+        monitorService.deleteAll();
     }
 }

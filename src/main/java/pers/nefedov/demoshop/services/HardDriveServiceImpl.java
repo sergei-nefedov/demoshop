@@ -16,8 +16,10 @@ public class HardDriveServiceImpl implements HardDriveService {
     HardDriveRepository hardDriveRepository;
 
     @Transactional
-    public void save(HardDriveMapper mapper) {
+    public HardDriveMapper save(HardDriveMapper mapper) {
         hardDriveRepository.save(mapper.getEntity());
+        hardDriveRepository.flush();
+        return new HardDriveMapper(mapper.getEntity());
     }
 
     public List<HardDriveMapper> findAll() {
@@ -37,6 +39,11 @@ public class HardDriveServiceImpl implements HardDriveService {
         HardDrive newHardDrive = mapper.getEntity();
         return hardDriveRepository.updateById(newHardDrive.getCapacity(), newHardDrive.getSerialNumber(),
                 newHardDrive.getManufacturer(), newHardDrive.getPrice(),newHardDrive.getQuantity(), mapper.getDto().getId());
+    }
+
+    @Override
+    public void deleteAll() {
+        hardDriveRepository.deleteAll();
     }
 }
 

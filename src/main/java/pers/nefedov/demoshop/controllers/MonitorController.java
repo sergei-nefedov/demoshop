@@ -35,8 +35,7 @@ public class MonitorController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<?> addItem(@Valid @RequestBody MonitorDto monitorDto) {
-        monitorFacade.save(monitorDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(monitorFacade.save(monitorDto), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/update")
@@ -45,5 +44,9 @@ public class MonitorController {
         final int updated = monitorFacade.update(monitorDto);
         return updated == 1 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @DeleteMapping(value =  "/delete/all")
+    public ResponseEntity<?> deleteAll() {
+        monitorFacade.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

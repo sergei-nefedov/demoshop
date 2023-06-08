@@ -8,8 +8,10 @@ import java.util.List;
 
 @Component
 public interface NotebookService {
-    public void save(NotebookMapper mapper);
+    public NotebookMapper save(NotebookMapper mapper);
     public List<NotebookMapper> findAll();
     public NotebookMapper findById(long id);
     public int update(NotebookMapper mapper);
+
+    public void deleteAll();
 }

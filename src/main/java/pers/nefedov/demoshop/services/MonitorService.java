@@ -7,8 +7,10 @@ import java.util.List;
 
 @Component
 public interface MonitorService {
-    public void save(MonitorMapper mapper);
+    public MonitorMapper save(MonitorMapper mapper);
     public List<MonitorMapper> findAll();
     public MonitorMapper findById(long id);
     public int update(MonitorMapper mapper);
+
+    public void deleteAll();
 }

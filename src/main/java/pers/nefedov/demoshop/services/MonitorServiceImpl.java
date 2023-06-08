@@ -16,8 +16,10 @@ public class MonitorServiceImpl implements MonitorService {
     MonitorRepository monitorRepository;
 
     @Transactional
-    public void save(MonitorMapper mapper) {
+    public MonitorMapper save(MonitorMapper mapper) {
         monitorRepository.save(mapper.getEntity());
+        monitorRepository.flush();
+        return new MonitorMapper(mapper.getEntity());
     }
 
     public List<MonitorMapper> findAll() {
@@ -37,5 +39,10 @@ public class MonitorServiceImpl implements MonitorService {
         Monitor newMonitor = mapper.getEntity();
         return monitorRepository.updateById(newMonitor.getDiagonalSize(), newMonitor.getSerialNumber(),
                 newMonitor.getManufacturer(), newMonitor.getPrice(),newMonitor.getQuantity(), mapper.getDto().getId());
+    }
+
+    @Override
+    public void deleteAll() {
+        monitorRepository.deleteAll();
     }
 }

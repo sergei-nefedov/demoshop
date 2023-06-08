@@ -7,8 +7,10 @@ import java.util.List;
 
 @Component
 public interface DesktopService {
-    public void save(DesktopMapper mapper);
+    public DesktopMapper save(DesktopMapper mapper);
     public List<DesktopMapper> findAll();
     public DesktopMapper findById(long id);
     public int update(DesktopMapper mapper);
+
+    public void deleteAll();
 }

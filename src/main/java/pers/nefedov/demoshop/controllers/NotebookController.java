@@ -35,8 +35,8 @@ public class NotebookController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<?> addItem(@Valid @RequestBody NotebookDto notebookDto) {
-        notebookFacade.save(notebookDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return new ResponseEntity<>(notebookFacade.save(notebookDto), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/update")
@@ -45,5 +45,9 @@ public class NotebookController {
         final int updated = notebookFacade.update(notebookDto);
         return updated == 1 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @DeleteMapping(value =  "/delete/all")
+    public ResponseEntity<?> deleteAll() {
+        notebookFacade.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

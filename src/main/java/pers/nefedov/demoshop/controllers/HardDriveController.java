@@ -35,8 +35,7 @@ public class HardDriveController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<?> addItem(@Valid @RequestBody HardDriveDto hardDriveDto) {
-        hardDriveFacade.save(hardDriveDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(hardDriveFacade.save(hardDriveDto), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/update")
@@ -45,5 +44,9 @@ public class HardDriveController {
         final int updated = hardDriveFacade.update(hardDriveDto);
         return updated == 1 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @DeleteMapping(value =  "/delete/all")
+    public ResponseEntity<?> deleteAll() {
+        hardDriveFacade.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

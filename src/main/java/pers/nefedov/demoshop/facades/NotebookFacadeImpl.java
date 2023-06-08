@@ -14,8 +14,9 @@ public class NotebookFacadeImpl implements NotebookFacade {
     @Autowired
     NotebookService notebookService;
     @Override
-    public void save(NotebookDto notebookDto) {
+    public NotebookDto save(NotebookDto notebookDto) {
         notebookService.save(new NotebookMapper(notebookDto));
+        return notebookService.save(new NotebookMapper(notebookDto)).getDto();
     }
 
     @Override
@@ -31,5 +32,10 @@ public class NotebookFacadeImpl implements NotebookFacade {
     @Override
     public int update(NotebookDto notebookDto) {
         return notebookService.update(new NotebookMapper(notebookDto));
+    }
+
+    @Override
+    public void deleteAll() {
+        notebookService.deleteAll();
     }
 }

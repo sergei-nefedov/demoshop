@@ -15,8 +15,8 @@ public class HardDriveFacadeImpl implements HardDriveFacade {
     HardDriveService hardDriveService;
 
     @Override
-    public void save(HardDriveDto hardDriveDto) {
-        hardDriveService.save(new HardDriveMapper(hardDriveDto));
+    public HardDriveDto save(HardDriveDto hardDriveDto) {
+        return hardDriveService.save(new HardDriveMapper(hardDriveDto)).getDto();
     }
 
     @Override
@@ -32,5 +32,10 @@ public class HardDriveFacadeImpl implements HardDriveFacade {
     @Override
     public int update(HardDriveDto hardDriveDto) {
         return hardDriveService.update(new HardDriveMapper(hardDriveDto));
+    }
+
+    @Override
+    public void deleteAll() {
+        hardDriveService.deleteAll();
     }
 }

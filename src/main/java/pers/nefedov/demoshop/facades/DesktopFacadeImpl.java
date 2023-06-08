@@ -14,8 +14,8 @@ public class DesktopFacadeImpl implements DesktopFacade {
 @Autowired
 DesktopService desktopService;
     @Override
-    public void save(DesktopDto desktopDto) {
-        desktopService.save(new DesktopMapper(desktopDto));
+    public DesktopDto save(DesktopDto desktopDto) {
+        return (desktopService.save(new DesktopMapper(desktopDto)).getDto());
     }
 
     @Override
@@ -31,6 +31,11 @@ DesktopService desktopService;
     @Override
     public int update(DesktopDto desktopDto) {
         return desktopService.update(new DesktopMapper(desktopDto));
+    }
+
+    @Override
+    public void deleteAll() {
+        desktopService.deleteAll();
     }
 }
 /*

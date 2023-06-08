@@ -17,8 +17,10 @@ public class NotebookServiceImpl implements NotebookService {
     NotebookRepository notebookRepository;
 
     @Transactional
-    public void save(NotebookMapper mapper) {
+    public NotebookMapper save(NotebookMapper mapper) {
         notebookRepository.save(mapper.getEntity());
+        notebookRepository.flush();
+        return new NotebookMapper(mapper.getEntity());
     }
 
     public List<NotebookMapper> findAll() {
@@ -38,5 +40,10 @@ public class NotebookServiceImpl implements NotebookService {
         Notebook newNotebook = mapper.getEntity();
         return notebookRepository.updateById(newNotebook.getSize(), newNotebook.getSerialNumber(),
                 newNotebook.getManufacturer(), newNotebook.getPrice(),newNotebook.getQuantity(), mapper.getDto().getId());
+    }
+
+    @Override
+    public void deleteAll() {
+        notebookRepository.deleteAll();
     }
 }

@@ -16,8 +16,10 @@ public class DesktopServiceImpl implements DesktopService {
     DesktopRepository desktopRepository;
 
     @Transactional
-    public void save(DesktopMapper mapper) {
+    public DesktopMapper save(DesktopMapper mapper) {
         desktopRepository.save(mapper.getEntity());
+        desktopRepository.flush();
+        return new DesktopMapper(mapper.getEntity());
     }
 
     public List<DesktopMapper> findAll() {
@@ -39,5 +41,10 @@ public class DesktopServiceImpl implements DesktopService {
         Desktop newDesktop = mapper.getEntity();
         return desktopRepository.updateById(newDesktop.getFormFactor(), newDesktop.getSerialNumber(),
                 newDesktop.getManufacturer(), newDesktop.getPrice(),newDesktop.getQuantity(), mapper.getDto().getId());
+    }
+
+    @Override
+    public void deleteAll() {
+        desktopRepository.deleteAll();
     }
 }

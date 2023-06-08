@@ -7,8 +7,10 @@ import java.util.List;
 
 @Component
 public interface HardDriveService {
-    public void save(HardDriveMapper mapper);
+    public HardDriveMapper save(HardDriveMapper mapper);
     public List<HardDriveMapper> findAll();
     public HardDriveMapper findById(long id);
     public int update(HardDriveMapper mapper);
+
+    public void deleteAll();
 }
