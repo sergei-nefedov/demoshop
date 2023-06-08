@@ -3,10 +3,9 @@ package pers.nefedov.demoshop.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pers.nefedov.demoshop.dto.DesktopDto;
 import pers.nefedov.demoshop.entities.Desktop;
 import pers.nefedov.demoshop.repositories.DesktopRepository;
-import pers.nefedov.demoshop.utils.DesktopMappingUtils;
+import pers.nefedov.demoshop.utils.DesktopMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,31 +14,37 @@ import java.util.stream.Collectors;
 public class DesktopServiceImpl implements DesktopService {
     @Autowired
     DesktopRepository desktopRepository;
-    @Autowired
-    DesktopMappingUtils desktopMappingUtils;
 
     @Transactional
-    public void save(DesktopDto desktopDto) {
-        Desktop desktop = desktopMappingUtils.mapToDesktopEntity(desktopDto);
-        desktopRepository.save(desktop);
+    public DesktopMapper save(DesktopMapper mapper) {
+        desktopRepository.save(mapper.getEntity());
+        desktopRepository.flush();
+        return new DesktopMapper(mapper.getEntity());
     }
 
-    public List<DesktopDto> findAll() {
+    public List<DesktopMapper> findAll() {
+//        return desktopRepository.findAll().stream().
+//                map(desktopMappingUtils::mapToDesktopDto).collect(Collectors.toList());
         return desktopRepository.findAll().stream().
-                map(desktopMappingUtils::mapToDesktopDto).collect(Collectors.toList());
+                map(DesktopMapper::new).collect(Collectors.toList());
     }
 
-    public DesktopDto findById(long id) {
+    public DesktopMapper findById(long id) {
         Desktop foundDesktop = desktopRepository.findById(id).orElse(null);
         return foundDesktop != null ?
-                desktopMappingUtils.mapToDesktopDto(foundDesktop) :
+                new DesktopMapper(foundDesktop) :
                 null;
     }
 
     @Transactional
-    public int update(DesktopDto desktopDto) {
-        Desktop newDesktop = desktopMappingUtils.mapToDesktopEntity(desktopDto);
+    public int update(DesktopMapper mapper) {
+        Desktop newDesktop = mapper.getEntity();
         return desktopRepository.updateById(newDesktop.getFormFactor(), newDesktop.getSerialNumber(),
-                newDesktop.getManufacturer(), newDesktop.getPrice(),newDesktop.getQuantity(), desktopDto.getId());
+                newDesktop.getManufacturer(), newDesktop.getPrice(),newDesktop.getQuantity(), mapper.getDto().getId());
+    }
+
+    @Override
+    public void deleteAll() {
+        desktopRepository.deleteAll();
     }
 }

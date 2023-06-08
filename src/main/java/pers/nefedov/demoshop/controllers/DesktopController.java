@@ -35,15 +35,18 @@ public class DesktopController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<?> addItem(@Valid @RequestBody DesktopDto desktopDto) {
-        desktopFacade.save(desktopDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        ;
+        return new ResponseEntity<>(desktopFacade.save(desktopDto), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/update")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@Valid @RequestBody DesktopDto desktopDto) {
         final int updated = desktopFacade.update(desktopDto);
         return updated == 1 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @DeleteMapping(value =  "/delete/all")
+    public ResponseEntity<?> deleteAll() {
+        desktopFacade.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

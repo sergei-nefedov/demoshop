@@ -1,12 +1,31 @@
 package pers.nefedov.demoshop.utils;
 
-import org.springframework.stereotype.Service;
 import pers.nefedov.demoshop.dto.MonitorDto;
 import pers.nefedov.demoshop.entities.Monitor;
 
-@Service
-public class MonitorMappingUtils {
-    public MonitorDto mapToMonitorDto(Monitor entity) {
+public class MonitorMapper {
+    private final MonitorDto dto;
+    private final Monitor entity;
+
+    public MonitorMapper(MonitorDto dto) {
+        this.dto = dto;
+        this.entity = mapToMonitorEntity(dto);
+    }
+
+    public MonitorMapper(Monitor entity) {
+        this.entity = entity;
+        this.dto = mapToMonitorDto(entity);
+    }
+
+    public MonitorDto getDto() {
+        return dto;
+    }
+
+    public Monitor getEntity() {
+        return entity;
+    }
+
+    private MonitorDto mapToMonitorDto(Monitor entity) {
         MonitorDto dto = new MonitorDto();
         dto.setDiagonalSize(entity.getDiagonalSize());
         dto.setManufacturer(entity.getManufacturer());
@@ -16,7 +35,7 @@ public class MonitorMappingUtils {
         dto.setId(entity.getId());
         return dto;
     }
-    public Monitor mapToMonitorEntity(MonitorDto dto) {
+    private Monitor mapToMonitorEntity(MonitorDto dto) {
         Monitor entity = new Monitor();
         entity.setQuantity(dto.getQuantity());
         entity.setSerialNumber(dto.getSerialNumber());

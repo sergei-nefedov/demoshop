@@ -3,10 +3,9 @@ package pers.nefedov.demoshop.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pers.nefedov.demoshop.dto.NotebookDto;
 import pers.nefedov.demoshop.entities.Notebook;
 import pers.nefedov.demoshop.repositories.NotebookRepository;
-import pers.nefedov.demoshop.utils.NotebookMappingUtils;
+import pers.nefedov.demoshop.utils.NotebookMapper;
 
 
 import java.util.List;
@@ -16,31 +15,35 @@ import java.util.stream.Collectors;
 public class NotebookServiceImpl implements NotebookService {
     @Autowired
     NotebookRepository notebookRepository;
-    @Autowired
-    NotebookMappingUtils notebookMappingUtils;
 
     @Transactional
-    public void save(NotebookDto notebookDto) {
-        Notebook notebook = notebookMappingUtils.mapToNotebookEntity(notebookDto);
-        notebookRepository.save(notebook);
+    public NotebookMapper save(NotebookMapper mapper) {
+        notebookRepository.save(mapper.getEntity());
+        notebookRepository.flush();
+        return new NotebookMapper(mapper.getEntity());
     }
 
-    public List<NotebookDto> findAll() {
+    public List<NotebookMapper> findAll() {
         return notebookRepository.findAll().stream().
-                map(notebookMappingUtils::mapToNotebookDto).collect(Collectors.toList());
+                map(NotebookMapper::new).collect(Collectors.toList());
     }
 
-    public NotebookDto findById(long id) {
+    public NotebookMapper findById(long id) {
         Notebook foundNotebook = notebookRepository.findById(id).orElse(null);
         return foundNotebook != null ?
-                notebookMappingUtils.mapToNotebookDto(foundNotebook) :
+                new NotebookMapper(foundNotebook) :
                 null;
     }
 
     @Transactional
-    public int update(NotebookDto notebookDto) {
-        Notebook newNotebook = notebookMappingUtils.mapToNotebookEntity(notebookDto);
+    public int update(NotebookMapper mapper) {
+        Notebook newNotebook = mapper.getEntity();
         return notebookRepository.updateById(newNotebook.getSize(), newNotebook.getSerialNumber(),
-                newNotebook.getManufacturer(), newNotebook.getPrice(),newNotebook.getQuantity(), notebookDto.getId());
+                newNotebook.getManufacturer(), newNotebook.getPrice(),newNotebook.getQuantity(), mapper.getDto().getId());
+    }
+
+    @Override
+    public void deleteAll() {
+        notebookRepository.deleteAll();
     }
 }

@@ -1,14 +1,16 @@
 package pers.nefedov.demoshop.services;
 
 import org.springframework.stereotype.Component;
-import pers.nefedov.demoshop.dto.HardDriveDto;
+import pers.nefedov.demoshop.utils.HardDriveMapper;
 
 import java.util.List;
 
 @Component
 public interface HardDriveService {
-    public void save(HardDriveDto hardDriveDto);
-    public List<HardDriveDto> findAll();
-    public HardDriveDto findById(long id);
-    public int update(HardDriveDto hardDriveDto);
+    public HardDriveMapper save(HardDriveMapper mapper);
+    public List<HardDriveMapper> findAll();
+    public HardDriveMapper findById(long id);
+    public int update(HardDriveMapper mapper);
+
+    public void deleteAll();
 }
