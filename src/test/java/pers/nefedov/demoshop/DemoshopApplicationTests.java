@@ -193,7 +193,7 @@ class DemoshopApplicationTests {
     }
 
     @Test
-    public void givennotebook_whenGetNotebook_thenStatus200() {
+    public void givenNotebook_whenGetNotebook_thenStatus200() {
         long id = createTestNotebook(17, "Manufactura", 20000, 10, 9999);
         given().pathParam("id", id)
 
@@ -239,22 +239,146 @@ class DemoshopApplicationTests {
     }
 
     @Test
+    public void whenUpdateHardDrive_thenStatus200() {
+        long id = createTestHardDrive(10000, "Manufactura", 20000, 10, 9999);
+        HardDrive hardDrive = new HardDrive();
+        hardDrive.setCapacity(2000);
+        hardDrive.setManufacturer("Other");
+        hardDrive.setPrice(99999);
+        hardDrive.setQuantity(11);
+        hardDrive.setSerialNumber(1111);
+        hardDrive.setId(id);
+        given().log()
+                .body().contentType("application/json").body(hardDrive)
+
+                .when().post("harddrives/update")
+
+                .then().log().body().statusCode(HttpStatus.OK.value());
+
+        given().pathParam("id", id)
+
+                .when().get("/harddrives/{id}")
+
+                .then().log().body().statusCode(HttpStatus.OK.value())
+                .and().body("manufacturer", equalTo("Other"))
+                .and().body("capacity", equalTo(2000))
+                .and().body("price", equalTo(99999.0F))
+                .and().body("quantity", equalTo(11))
+                .and().body("serialNumber", equalTo(1111))
+        ;
+    }
+
+    @Test
+    public void whenUpdateMonitor_thenStatus200() {
+        long id = createTestMonitor(21, "Manufactura", 20000, 10, 9999);
+        Monitor monitor = new Monitor();
+        monitor.setDiagonalSize(24);
+        monitor.setManufacturer("Other");
+        monitor.setPrice(99999);
+        monitor.setQuantity(11);
+        monitor.setSerialNumber(1111);
+        monitor.setId(id);
+        given().log()
+                .body().contentType("application/json").body(monitor)
+
+                .when().post("monitors/update")
+
+                .then().log().body().statusCode(HttpStatus.OK.value());
+
+        given().pathParam("id", id)
+
+                .when().get("/monitors/{id}")
+
+                .then().log().body().statusCode(HttpStatus.OK.value())
+                .and().body("manufacturer", equalTo("Other"))
+                .and().body("diagonalSize", equalTo(24))
+                .and().body("price", equalTo(99999.0F))
+                .and().body("quantity", equalTo(11))
+                .and().body("serialNumber", equalTo(1111))
+        ;
+    }
+
+    @Test
+    public void whenUpdateNotebook_thenStatus200() {
+        long id = createTestNotebook(14, "Manufactura", 20000, 10, 9999);
+        Notebook notebook = new Notebook();
+        notebook.setSize(17);
+        notebook.setManufacturer("Other");
+        notebook.setPrice(99999);
+        notebook.setQuantity(11);
+        notebook.setSerialNumber(1111);
+        notebook.setId(id);
+        given().log()
+                .body().contentType("application/json").body(notebook)
+
+                .when().post("notebooks/update")
+
+                .then().log().body().statusCode(HttpStatus.OK.value());
+
+        given().pathParam("id", id)
+
+                .when().get("/notebooks/{id}")
+
+                .then().log().body().statusCode(HttpStatus.OK.value())
+                .and().body("manufacturer", equalTo("Other"))
+                .and().body("size", equalTo(17))
+                .and().body("price", equalTo(99999.0F))
+                .and().body("quantity", equalTo(11))
+                .and().body("serialNumber", equalTo(1111))
+        ;
+    }
+
+    @Test
     public void whenDeleteAllDesktops_thenStatus200() {
 
         given().log().body().contentType("application/json")
-
                 .when().delete("/desktops/delete/all")
-
                 .then().log().body()
                 .statusCode(HttpStatus.OK.value());
 
         when().get("/desktops/all")
                 .then().log().body()
-                .statusCode(HttpStatus.NOT_FOUND.value())
-
-                ;
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
+    @Test
+    public void whenDeleteAllHardDrives_thenStatus200() {
+
+        given().log().body().contentType("application/json")
+                .when().delete("/harddrives/delete/all")
+                .then().log().body()
+                .statusCode(HttpStatus.OK.value());
+
+        when().get("/harddrives/all")
+                .then().log().body()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void whenDeleteAllMonitors_thenStatus200() {
+
+        given().log().body().contentType("application/json")
+                .when().delete("/monitors/delete/all")
+                .then().log().body()
+                .statusCode(HttpStatus.OK.value());
+
+        when().get("/monitors/all")
+                .then().log().body()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void whenDeleteAllNotebooks_thenStatus200() {
+
+        given().log().body().contentType("application/json")
+                .when().delete("/notebooks/delete/all")
+                .then().log().body()
+                .statusCode(HttpStatus.OK.value());
+
+        when().get("/notebooks/all")
+                .then().log().body()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
 
     public int createTestDesktop(FormFactor formFactor, String manufacturer, double price, int quantity,
                                  long serialNumber) {
